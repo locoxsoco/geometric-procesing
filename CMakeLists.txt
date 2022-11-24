@@ -28,8 +28,8 @@ if(NOT OPENGL_FOUND)
 endif(NOT OPENGL_FOUND)
 
 # GLUT
-set (GLUT_INCLUDE_DIR "D:/MIRI/2022-2/geometric-procesing/freeglut/include")
-set (OPENGL_LIBRARY_DIR "D:/MIRI/2022-2/geometric-procesing/freeglut/lib/x64")
+#set (GLUT_INCLUDE_DIR "D:/MIRI/2022-2/geometric-procesing/freeglut/include")
+#set (OPENGL_LIBRARY_DIR "D:/MIRI/2022-2/geometric-procesing/freeglut/lib/x64")
 find_package(GLUT REQUIRED)
 include_directories(${GLUT_INCLUDE_DIR})
 if(NOT GLUT_FOUND)
@@ -50,8 +50,8 @@ include_directories("${CMAKE_SOURCE_DIR}/nanoflann")
 
 #link_libraries(dl)
 LINK_DIRECTORIES(
-    #${appName} "${CMAKE_SOURCE_DIR}/freeglut/lib"
-    ${appName} "D:/MIRI/2022-2/geometric-procesing/freeglut/bin/x64"
+    ${appName} "${CMAKE_SOURCE_DIR}/freeglut/lib"
+    #${appName} "D:/MIRI/2022-2/geometric-procesing/freeglut/bin/x64"
 )
 
 set(imgui_files imgui/imconfig.h imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_draw.cpp imgui/imgui.h imgui/imgui_internal.h imgui/imgui_widgets.cpp imgui/imstb_rectpack.h imgui/imstb_textedit.h imgui/imstb_truetype.h imgui/imgui_impl_opengl3.h imgui/imgui_impl_opengl3.cpp imgui/imgui_impl_glut.h imgui/imgui_impl_glut.cpp)
