@@ -8,12 +8,11 @@
 			"path" : "01-icp.pdb"
 		}
 	],
-	"backtrace" : 2,
+	"backtrace" : 1,
 	"backtraceGraph" : 
 	{
 		"commands" : 
 		[
-			"_add_executable",
 			"add_executable",
 			"LINK_DIRECTORIES",
 			"target_link_libraries",
@@ -21,66 +20,59 @@
 		],
 		"files" : 
 		[
-			"G:/My Drive/2022-1/FRR/imgui/examples/example_glut_opengl2/vcpkg/scripts/buildsystems/vcpkg.cmake",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
 			{
-				"file" : 1
-			},
-			{
-				"command" : 1,
-				"file" : 1,
-				"line" : 59,
-				"parent" : 0
+				"file" : 0
 			},
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 534,
-				"parent" : 1
+				"line" : 62,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 52,
+				"parent" : 0
 			},
 			{
 				"command" : 2,
-				"file" : 1,
-				"line" : 50,
+				"file" : 0,
+				"line" : 63,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
-				"file" : 1,
-				"line" : 60,
+				"file" : 0,
+				"line" : 34,
 				"parent" : 0
 			},
 			{
-				"command" : 4,
-				"file" : 1,
-				"line" : 32,
+				"command" : 3,
+				"file" : 0,
+				"line" : 42,
 				"parent" : 0
 			},
 			{
-				"command" : 4,
-				"file" : 1,
-				"line" : 40,
-				"parent" : 0
-			},
-			{
-				"command" : 4,
-				"file" : 1,
-				"line" : 45,
-				"parent" : 0
-			},
-			{
-				"command" : 4,
-				"file" : 1,
-				"line" : 46,
-				"parent" : 0
-			},
-			{
-				"command" : 4,
-				"file" : 1,
+				"command" : 3,
+				"file" : 0,
 				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 48,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 49,
 				"parent" : 0
 			}
 		]
@@ -97,24 +89,24 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 5,
-					"path" : "G:/My Drive/2022-1/FRR/imgui/examples/example_glut_opengl2/vcpkg/installed/x64-windows/include"
+					"backtrace" : 4,
+					"path" : "D:/MIRI/2022-2/geometric-procesing/freeglut/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 5,
 					"path" : "C:/Program Files/glm"
 				},
 				{
+					"backtrace" : 6,
+					"path" : "D:/MIRI/2022-2/geometric-procesing/gl3w"
+				},
+				{
 					"backtrace" : 7,
-					"path" : "C:/MIRI/2022-2/01-icp-base/gl3w"
+					"path" : "D:/MIRI/2022-2/geometric-procesing/eigen"
 				},
 				{
 					"backtrace" : 8,
-					"path" : "C:/MIRI/2022-2/01-icp-base/eigen"
-				},
-				{
-					"backtrace" : 9,
-					"path" : "C:/MIRI/2022-2/01-icp-base/nanoflann"
+					"path" : "D:/MIRI/2022-2/geometric-procesing/nanoflann"
 				}
 			],
 			"language" : "CXX",
@@ -122,7 +114,7 @@
 			{
 				"backtraces" : 
 				[
-					2
+					1
 				],
 				"standard" : "11"
 			},
@@ -144,7 +136,8 @@
 				32,
 				34,
 				36,
-				38
+				38,
+				40
 			]
 		},
 		{
@@ -157,24 +150,24 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 5,
-					"path" : "G:/My Drive/2022-1/FRR/imgui/examples/example_glut_opengl2/vcpkg/installed/x64-windows/include"
+					"backtrace" : 4,
+					"path" : "D:/MIRI/2022-2/geometric-procesing/freeglut/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 5,
 					"path" : "C:/Program Files/glm"
 				},
 				{
+					"backtrace" : 6,
+					"path" : "D:/MIRI/2022-2/geometric-procesing/gl3w"
+				},
+				{
 					"backtrace" : 7,
-					"path" : "C:/MIRI/2022-2/01-icp-base/gl3w"
+					"path" : "D:/MIRI/2022-2/geometric-procesing/eigen"
 				},
 				{
 					"backtrace" : 8,
-					"path" : "C:/MIRI/2022-2/01-icp-base/eigen"
-				},
-				{
-					"backtrace" : 9,
-					"path" : "C:/MIRI/2022-2/01-icp-base/nanoflann"
+					"path" : "D:/MIRI/2022-2/geometric-procesing/nanoflann"
 				}
 			],
 			"language" : "C",
@@ -198,23 +191,23 @@
 				"role" : "flags"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "-LIBPATH:C:\\MIRI\\2022-2\\01-icp-base\\freeglut\\lib",
+				"backtrace" : 2,
+				"fragment" : "-LIBPATH:D:\\MIRI\\2022-2\\geometric-procesing\\freeglut\\bin\\x64",
 				"role" : "libraryPath"
 			},
 			{
-				"backtrace" : 4,
+				"backtrace" : 3,
 				"fragment" : "opengl32.lib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 4,
+				"backtrace" : 3,
 				"fragment" : "glu32.lib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 4,
-				"fragment" : "\"G:\\My Drive\\2022-1\\FRR\\imgui\\examples\\example_glut_opengl2\\vcpkg\\installed\\x64-windows\\debug\\lib\\freeglutd.lib\"",
+				"backtrace" : 3,
+				"fragment" : "..\\..\\..\\freeglut\\lib\\x64\\freeglut.lib",
 				"role" : "libraries"
 			},
 			{
@@ -257,7 +250,8 @@
 				31,
 				33,
 				35,
-				37
+				37,
+				39
 			]
 		},
 		{
@@ -281,223 +275,235 @@
 				32,
 				34,
 				36,
-				38
+				38,
+				40
 			]
 		}
 	],
 	"sources" : 
 	[
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imconfig.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui_demo.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui_draw.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imgui.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imgui_internal.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui_widgets.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imstb_rectpack.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imstb_textedit.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imstb_truetype.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imgui_impl_opengl3.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui_impl_opengl3.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "imgui/imgui_impl_glut.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "imgui/imgui_impl_glut.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 1,
 			"path" : "gl3w/gl3w.c",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "gl3w/GL/gl3w.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "gl3w/KHR/khrplatform.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "nanoflann/nanoflann.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "PointCloud.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "PointCloud.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "Camera.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Camera.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "Scene.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Scene.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "Shader.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Shader.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "ShaderProgram.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "ShaderProgram.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "Application.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Application.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "main.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "NormalEstimator.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "NormalEstimator.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "NearestNeighbors.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "NearestNeighbors.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "IterativeClosestPoint.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "IterativeClosestPoint.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"path" : "SegmentCloud.h",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 2,
+			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "SegmentCloud.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "utils.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "utils.cpp",
 			"sourceGroupIndex" : 1
 		}
 	],

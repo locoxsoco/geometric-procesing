@@ -10,7 +10,7 @@ void IterativeClosestPoint::setClouds(PointCloud *pointCloud1, PointCloud *point
 {
 	cloud1 = pointCloud1;
 	cloud2 = pointCloud2;
-	knn.setPoints(&(cloud1->getPoints()));
+	//knn.setPoints(&(cloud1->getPoints()));
 }
 
 // This method should mark the border points in cloud 1. It also changes their color (for example to red).
@@ -19,6 +19,16 @@ void IterativeClosestPoint::setClouds(PointCloud *pointCloud1, PointCloud *point
 void IterativeClosestPoint::markBorderPoints()
 {
 	// TODO
+	NearestNeighbors knn;
+	knn.setPoints(&(cloud1->getPoints()));
+
+	for (glm::vec3 point : cloud1->getPoints()) {
+		// Get the KNN for the point
+		unsigned int kNeighbors = 8;
+		vector<size_t> neighbor_ids;
+		vector<float> dists_squared;
+		knn.getKNearestNeighbors(point, kNeighbors, neighbor_ids, dists_squared);
+	}
 }
 
 
@@ -30,6 +40,8 @@ void IterativeClosestPoint::markBorderPoints()
 vector<int> *IterativeClosestPoint::computeCorrespondence()
 {
 	// TODO
+	// 1. First compute the centroid corrected versions of the point sets
+	glm::vec3 p, q;
 	
 	return NULL;
 }

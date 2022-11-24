@@ -20,7 +20,7 @@ public:
 	
 private:
 	PointCloud *cloud1, *cloud2;
-	NearestNeighbors knn;
+	//NearestNeighbors knn;
 
 };
 

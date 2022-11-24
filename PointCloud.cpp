@@ -184,10 +184,3 @@ void PointCloud::changeAllColors(const glm::vec4 &color, ShaderProgram &program)
 		colors[i] = color;
 	sendToOpenGL(program);
 }
-
-
-
-
-
-
-
