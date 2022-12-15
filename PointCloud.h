@@ -40,6 +40,7 @@ public:
 private:
 	vector<glm::vec3> points, normals;
 	vector<glm::vec4> colors;
+	vector<int> border_points;
 
 	bool bGLObjsInit;
 	GLuint vao;

@@ -4,6 +4,7 @@
 
 #include "PointCloud.h"
 #include "NearestNeighbors.h"
+#include "utils.h"
 
 
 class IterativeClosestPoint
@@ -20,7 +21,7 @@ public:
 	
 private:
 	PointCloud *cloud1, *cloud2;
-	//NearestNeighbors knn;
+	vector<int> border_points;
 
 };
 
