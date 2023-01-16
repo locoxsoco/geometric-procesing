@@ -10,13 +10,12 @@ void IterativeClosestPoint::setClouds(PointCloud *pointCloud1, PointCloud *point
 {
 	cloud1 = pointCloud1;
 	cloud2 = pointCloud2;
-	//knn.setPoints(&(cloud1->getPoints()));
 }
 
 // This method should mark the border points in cloud 1. It also changes their color (for example to red).
 // You will need to add an attribute to this class that stores this property for all points in cloud 1. 
 
-void IterativeClosestPoint::markBorderPoints()
+void IterativeClosestPoint::markBorderPoints(PointCloud &cloud)
 {
 	// TODO
 	const vector<glm::vec3>* points1 = &(cloud1->getPoints());
@@ -24,7 +23,6 @@ void IterativeClosestPoint::markBorderPoints()
 	NearestNeighbors knn;
 	knn.setPoints(points1);
 
-	//for (glm::vec3 point : cloud1->getPoints()) {
 	for (unsigned int i = 0; i < cloud1->getPoints().size(); i++) {
 		glm::vec3 point = cloud1->getPoints()[i];
 		// 1. Compute its k-nearest neighbors
@@ -34,16 +32,18 @@ void IterativeClosestPoint::markBorderPoints()
 		knn.getKNearestNeighbors(point, kNeighbors, neighbor_ids, dists_squared);
 
 		// 2. Use PCA to compute local reference frame for point p
-		Eigen::Matrix3f eigenvectors = pca(*points1, neighbor_ids, dists_squared);
+		Eigen::Matrix3f L;
+		Eigen::Vector3f D;
+		pca(*points1, neighbor_ids, dists_squared, L, D);
 
 		// 3. Transform the k-nearest neighbors to this frame
 		vector<glm::vec3> neighbors_frame(neighbor_ids.size());
 		for (unsigned int j = 0; j < neighbor_ids.size(); j++) {
 			glm::vec3 pj_pi = points1->at(neighbor_ids[j]) - point;
 			neighbors_frame[j] = glm::vec3(
-				glm::dot(pj_pi, glm::vec3(eigenvectors(0, 0), eigenvectors(1, 0), eigenvectors(2, 0))),
-				glm::dot(pj_pi, glm::vec3(eigenvectors(0, 1), eigenvectors(1, 1), eigenvectors(2, 1))),
-				glm::dot(pj_pi, glm::vec3(eigenvectors(0, 2), eigenvectors(1, 2), eigenvectors(2, 2)))
+				glm::dot(pj_pi, glm::vec3(L(0, 0), L(0, 1), L(0, 2))),
+				glm::dot(pj_pi, glm::vec3(L(1, 0), L(1, 1), L(1, 2))),
+				glm::dot(pj_pi, glm::vec3(L(2, 0), L(2, 1), L(2, 2)))
 			);
 		}
 
@@ -70,15 +70,9 @@ void IterativeClosestPoint::markBorderPoints()
 		// If maxDeltaAlphai greater then threshold, pi is border point
 		float max_delta_alpha_threshold = 10.f;
 		int is_border_point = 0;
-		// Looking for the right adjacent
+		// Looking for an adjacent difference > threshold
 		for (unsigned int j = 0; j < neighbor_ids.size()-1; j++) {
 			if (polar_representation_angles[j] - polar_representation_angles[j + 1] > max_delta_alpha_threshold) {
-				is_border_point = 1;
-			}
-		}
-		// Looking for the left adjacent
-		for (unsigned int j = 1; j < neighbor_ids.size(); j++) {
-			if (polar_representation_angles[j] - polar_representation_angles[j - 1] > max_delta_alpha_threshold) {
 				is_border_point = 1;
 			}
 		}
@@ -95,8 +89,10 @@ void IterativeClosestPoint::markBorderPoints()
 vector<int> *IterativeClosestPoint::computeCorrespondence()
 {
 	// TODO
-	// 1. First compute the centroid corrected versions of the point sets
-	glm::vec3 p, q;
+	vector<int> correspondence;
+	for (int i = 0; i < cloud2->getPoints().size(); i++) {
+		if()
+	}
 	
 	return NULL;
 }
@@ -109,9 +105,40 @@ vector<int> *IterativeClosestPoint::computeCorrespondence()
 glm::mat4 IterativeClosestPoint::computeICPStep()
 {
 	// TODO
-	// 1. For every point qi in Q we find closest pj in P
-	// 2. Find optimal rigid transformation
-	// 3. Apply transformation R,t to the points in Q
+	const vector<glm::vec3>* points1 = &(cloud1->getPoints());
+	const vector<glm::vec3>* points2 = &(cloud2->getPoints());
+
+	// 1. Compute the centroids corrected versions of the point sets
+	glm::vec3 p_centroid = getCentroid(*points1);
+	vector<glm::vec3> p_corigin = getPointsCentered(*points1, p_centroid);
+	glm::vec3 q_centroid = getCentroid(*points2);
+	vector<glm::vec3> q_corigin = getPointsCentered(*points2, q_centroid);
+	// 2. Compute the covariance matrix S of both points sets
+	Eigen::Matrix3f S;
+	S = Eigen::Matrix3f::Zero();
+	for (unsigned int j = 0; j < q_corigin.size(); j++) {
+		S += Eigen::Vector3f(
+			q_corigin[j][0],
+			q_corigin[j][1],
+			q_corigin[j][2]
+		) * Eigen::Vector3f(
+			p_corigin[j][0],
+			p_corigin[j][1],
+			p_corigin[j][2]
+		).transpose();
+	}
+	// 3. Compute the Singular Value Decomposition of S
+	Eigen::JacobiSVD<Eigen::Matrix3f> eigensolver(S);
+	Eigen::Matrix4f U = eigensolver.matrixU();
+	Eigen::Matrix4f V = eigensolver.matrixV();
+	// 4. Compute the optimal rotation matrix using U and V
+	Eigen::Matrix4f R = V * U.transpose();
+	// 5. If reflection, cancel it
+	if (S.determinant() == -1) {
+		R(3, 3) = -1;
+	}
+	// 6. Compute the traslation vector
+	//glm::vec4 t = p_centroid - R * q_centroid;
 	
 	return glm::mat4(1.f);
 }
@@ -125,15 +152,13 @@ glm::mat4 IterativeClosestPoint::computeICPStep()
 vector<int> *IterativeClosestPoint::computeFullICP(unsigned int maxSteps)
 {
 	// TODO
-	const vector<glm::vec3>* points1 = &(cloud1->getPoints());
-	const vector<glm::vec3>* points2 = &(cloud2->getPoints());
+	// 1. For every point qi in Q we find closest pj in P
+	// 2. Find optimal rigid transformation
+	// 3. Apply transformation R,t to the points in Q
 
-	// 1. Compute the centroids of the point sets
-	// 2. Compute the covariance matrix S of both points sets
-	// 3. Compute the Singular Value Decomposition of S
-	// 4. Compute the optimal rotation matrix using U and V
-	// 5. If reflection, cancel it
-	// 6. Compute the traslation vector
+	
+
+
 	bool converged = false;
 	unsigned int curStep = 0;
 	while (!converged && curStep < maxSteps) {

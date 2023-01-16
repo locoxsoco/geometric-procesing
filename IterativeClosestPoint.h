@@ -13,7 +13,7 @@ class IterativeClosestPoint
 public:
 	void setClouds(PointCloud *pointCloud1, PointCloud *pointCloud2);
 	
-	void markBorderPoints();
+	void markBorderPoints(PointCloud &cloud);
 	vector<int> *computeCorrespondence();
 	glm::mat4 computeICPStep();
 	
@@ -22,6 +22,7 @@ public:
 private:
 	PointCloud *cloud1, *cloud2;
 	vector<int> border_points;
+	vector<int> correspondence;
 
 };
 

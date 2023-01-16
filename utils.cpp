@@ -1,6 +1,6 @@
 #include "utils.h"
 
-Eigen::Matrix3f pca(const vector<glm::vec3>& points, vector<size_t>& neighbor_ids, vector<float>& dists_squared) {
+void pca(const vector<glm::vec3>& points, vector<size_t>& neighbor_ids, vector<float>& dists_squared, Eigen::Matrix3f& L, Eigen::Vector3f& D) {
 	// 1. Compute Centroid
 	glm::vec3 p_centroid = getCentroid(points, neighbor_ids);
 
@@ -24,14 +24,14 @@ Eigen::Matrix3f pca(const vector<glm::vec3>& points, vector<size_t>& neighbor_id
 
 	// 4. Compute Spectral Decomposition
 	Eigen::SelfAdjointEigenSolver<Eigen::Matrix3f> eigensolver(C);
-	Eigen::Matrix3f L = eigensolver.eigenvectors();
-	//Eigen::Vector3f D = eigensolver.eigenvalues();
+	L = eigensolver.eigenvectors();
+	D = eigensolver.eigenvalues();
 
 	// 5. Sort eigenvalues in decreasing order
 	// L and D returns values already sorted in decreasing order
 
 	// 6. Get PCA eigenvectors to compute normal, etc
-	return L;
+	return;
 }
 
 glm::vec3 getCentroid(const vector<glm::vec3>& points) {

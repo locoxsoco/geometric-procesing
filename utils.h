@@ -11,6 +11,6 @@ glm::vec3 getCentroid(const vector<glm::vec3>& points);
 glm::vec3 getCentroid(const vector<glm::vec3>& points, vector<size_t>& neighbor_ids);
 vector<glm::vec3> getPointsCentered(const vector<glm::vec3>& points, glm::vec3 centroid);
 vector<glm::vec3> getNeighborsCentered(const vector<glm::vec3>& points, glm::vec3 centroid, vector<size_t>& neighbor_ids);
-Eigen::Matrix3f pca(const vector<glm::vec3>& points, vector<size_t>& neighbor_ids, vector<float>& dists_squared);
+void pca(const vector<glm::vec3>& points, vector<size_t>& neighbor_ids, vector<float>& dists_squared, Eigen::Matrix3f &L, Eigen::Vector3f &D);
 
 #endif // _UTILS_INCLUDE

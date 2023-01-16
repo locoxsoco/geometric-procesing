@@ -24,8 +24,10 @@ void NormalEstimator::computePointCloudNormals(const vector<glm::vec3> &points, 
 		nn.getKNearestNeighbors(points[i], kNeighbors, neighbor_ids, dists_squared);
 
 		// PCA Method
-		Eigen::Matrix3f eigenvectors = pca(points, neighbor_ids, dists_squared);
-		glm::vec3 normal = glm::vec3(eigenvectors(0, 0), eigenvectors(1, 0), eigenvectors(2, 0));
+		Eigen::Matrix3f L;
+		Eigen::Vector3f D;
+		pca(points, neighbor_ids, dists_squared, L ,D);
+		glm::vec3 normal = glm::vec3(L(0, 0), L(1, 0), L(2, 0));
 		if (normals[i].z < 0)
 			normals[i] = -normal;
 		else normals[i] = normal;
