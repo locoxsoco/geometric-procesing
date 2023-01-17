@@ -1,5 +1,8 @@
 #include <algorithm>
 #include "TriangleMesh.h"
+#include <algorithm>
+#include <iterator>
+#include <set>
 
 
 TriangleMesh::TriangleMesh()

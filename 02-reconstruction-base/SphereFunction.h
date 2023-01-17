@@ -17,6 +17,7 @@ public:
 private:
 	glm::vec3 C;
 	float R;
+	float rho = 1, delta = 1;
 
 };
 
