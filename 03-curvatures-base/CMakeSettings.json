@@ -1,0 +1,70 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "GLUT_INCLUDE_DIR",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/include",
+          "type": "PATH"
+        },
+        {
+          "name": "GLUT_glut_LIBRARY_DEBUG",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "GLUT_glut_LIBRARY_RELEASE",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "GLM_INCLUDE_DIR",
+          "value": "C:/Auxiliares/glm-0.9.9.8/glm",
+          "type": "PATH"
+        }
+      ]
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": [
+        {
+          "name": "GLUT_glut_LIBRARY_RELEASE",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "GLUT_INCLUDE_DIR",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/include",
+          "type": "PATH"
+        },
+        {
+          "name": "GLM_INCLUDE_DIR",
+          "value": "C:/Auxiliares/glm-0.9.9.8/glm",
+          "type": "PATH"
+        },
+        {
+          "name": "GLUT_glut_LIBRARY_DEBUG",
+          "value": "C:/MIRI/2022-2/geometric-procesing/03-curvatures-base/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        }
+      ]
+    }
+  ]
+}
