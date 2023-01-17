@@ -32,10 +32,10 @@ void MongePatch::init(const glm::vec3 &P, const glm::vec3 &normal, const vector<
 
 	// Then we fit the function using least squares giving eq: As=b
 	// where A is sum q_i * q_i^T, and b is suim w_i * q_i
-	Eigen::MatrixXf A = Eigen::MatrixXf::Zero(6,6);
-	Eigen::VectorXf s;
-	Eigen::VectorXf b = Eigen::VectorXf::Zero(6);
-	Eigen::VectorXf q_i(6);
+	Eigen::MatrixXd A = Eigen::MatrixXd::Zero(6,6);
+	Eigen::VectorXd s;
+	Eigen::VectorXd b = Eigen::VectorXd::Zero(6);
+	Eigen::VectorXd q_i(6);
 	for (int i = 0; i < closest.size(); i++) {
 		q_i(0) = pis_new_system[i].x * pis_new_system[i].x;
 		q_i(1) = pis_new_system[i].x * pis_new_system[i].y;
@@ -47,7 +47,7 @@ void MongePatch::init(const glm::vec3 &P, const glm::vec3 &normal, const vector<
 		A += q_i * q_i.transpose();
 		b += pis_new_system[i].z * q_i;
 	}
-	Eigen::ColPivHouseholderQR<Eigen::MatrixXf> dec(A);
+	Eigen::ColPivHouseholderQR<Eigen::MatrixXd> dec(A);
 	s = dec.solve(b);
 
 	for (int i = 0; i < 6; i++) {
@@ -60,14 +60,14 @@ void MongePatch::init(const glm::vec3 &P, const glm::vec3 &normal, const vector<
 
 void MongePatch::principalCurvatures(float &kmin, float &kmax) const
 {
-	Eigen::Matrix2f Hw;
+	Eigen::Matrix2d Hw;
 	Hw(0, 0) = 2*vs[0];
 	Hw(0, 1) = vs[1];
 	Hw(1, 0) = vs[1];
 	Hw(1, 1) = 2*vs[2];
 
-	Eigen::JacobiSVD<Eigen::Matrix2f, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(Hw);
-	Eigen::Vector2f pc = svd.singularValues();
+	Eigen::JacobiSVD<Eigen::Matrix2d, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(Hw);
+	Eigen::Vector2d pc = svd.singularValues();
 
 	kmin = pc[0];
 	kmax = pc[1];
