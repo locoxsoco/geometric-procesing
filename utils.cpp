@@ -52,6 +52,15 @@ glm::vec3 getCentroid(const vector<glm::vec3>& points, vector<size_t>& neighbor_
 	return p_centroid /= neighbor_ids.size();
 }
 
+glm::vec3 getCentroid(const vector<glm::vec3>& points1, const vector<glm::vec3>& points2, vector<int>& correspondence) {
+	glm::vec3 p_centroid(0.0, 0.0, 0.0);
+	float total_dists_squared = 0.f;
+	for (unsigned int j = 0; j < points2.size(); j++) {
+		p_centroid += points1[correspondence[j]];
+	}
+	return p_centroid /= points2.size();
+}
+
 vector<glm::vec3> getPointsCentered(const vector<glm::vec3>& points, glm::vec3 centroid) {
 	vector<glm::vec3> points_centered(points.size());
 	for (unsigned int j = 0; j < points.size(); j++) {
@@ -66,4 +75,12 @@ vector<glm::vec3> getNeighborsCentered(const vector<glm::vec3>& points, glm::vec
 		neighbors_centered[j] = points[neighbor_ids[j]] - centroid;
 	}
 	return neighbors_centered;
+}
+
+vector<glm::vec3> getPointsCentered(const vector<glm::vec3>& points1, glm::vec3 centroid, const vector<glm::vec3>& points2, vector<int>& correspondence) {
+	vector<glm::vec3> points_centered(points2.size());
+	for (unsigned int j = 0; j < points2.size(); j++) {
+		points_centered[j] = points1[correspondence[j]] - centroid;
+	}
+	return points_centered;
 }

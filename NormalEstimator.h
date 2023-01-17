@@ -16,6 +16,7 @@ class NormalEstimator
 
 public:
 	void computePointCloudNormals(const vector<glm::vec3> &points, vector<glm::vec3> &normals);
+	unsigned int kNeighbors = 13;
 
 };
 

@@ -6,7 +6,31 @@
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}"
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "variables": [
+        {
+          "name": "GLUT_glut_LIBRARY_DEBUG",
+          "value": "C:/MIRI/2022-2/geometric-procesing/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "GLUT_glut_LIBRARY_RELEASE",
+          "value": "C:/MIRI/2022-2/geometric-procesing/freeglut/lib/x64/freeglut.lib",
+          "type": "FILEPATH"
+        }
+      ]
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     }
   ]
 }

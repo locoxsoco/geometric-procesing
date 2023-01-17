@@ -18,7 +18,6 @@ void NormalEstimator::computePointCloudNormals(const vector<glm::vec3> &points, 
 
 	for (unsigned int i = 0; i < points.size(); i++) {
 		// Get the KNN for the point
-		unsigned int kNeighbors = 13;
 		vector<size_t> neighbor_ids;
 		vector<float> dists_squared;
 		nn.getKNearestNeighbors(points[i], kNeighbors, neighbor_ids, dists_squared);
