@@ -17,14 +17,12 @@ public:
 	
 private:
 	const PointCloud* cloud;
-	vector<glm::vec3> points_plus;
-	vector<glm::vec3> points_minus;
-	vector<float> vc_plus, vc_minus;
+	vector<double> vc;
 	NearestNeighbors nn;
 	float std_dv,nn_radius;
-	float rho = 1, delta = 1, lambda_regularization=0.3, d = 0.3;
+	float rho = 1.0, delta = 1.0, lambda_regularization=0.3, d = 0.0001;
 
-	float gaussianRBF(float r) const;
+	double gaussianRBF(double r) const;
 };
 
 

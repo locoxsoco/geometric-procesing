@@ -17,6 +17,11 @@
           "name": "GLUT_glut_LIBRARY_RELEASE",
           "value": "C:/MIRI/2022-2/geometric-procesing/freeglut/lib/x64/freeglut.lib",
           "type": "FILEPATH"
+        },
+        {
+          "name": "GLM_INCLUDE_DIR",
+          "value": "C:/Auxiliares/glm-0.9.9.8/glm",
+          "type": "PATH"
         }
       ]
     },
@@ -29,8 +34,7 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     }
   ]
 }
