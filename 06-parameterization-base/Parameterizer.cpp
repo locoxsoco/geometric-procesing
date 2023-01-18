@@ -22,6 +22,7 @@ void Parameterizer::harmonicCoordinates(TriangleMesh *mesh)
 {
 	// First we need to determine the border edges of the input mesh
 	// TODO
+	int nVertices = mesh->getVertices().size();
 	set<pair<int, int>> edges;
 	int nTriangles = mesh->getTriangles().size();
 	for (int i = 0; i < nTriangles; i+=3) {
@@ -86,17 +87,66 @@ void Parameterizer::harmonicCoordinates(TriangleMesh *mesh)
 	// TODO
 	double cycle_length = 0;
 	for (int i = 0; i < cycle.size()-1; i++) {
-		cycle_length += glm::length(mesh->getVertices()[cycle[i]] - mesh->getVertices()[cycle[i + 1]]);
+		cycle_length += glm::length(mesh->getVertices()[cycle[i+1]] - mesh->getVertices()[cycle[i]]);
 	}
 	cycle_length += glm::length(mesh->getVertices()[cycle[cycle.size() - 1]] - mesh->getVertices()[cycle[0]]);
+	double cur_cycle_length = 0;
+	Eigen::MatrixXd T = Eigen::MatrixXd::Zero(nVertices, 2);
+	for (int i = 0; i < cycle.size()-1; i++) {
+		double cur_length = glm::length(mesh->getVertices()[cycle[i+1]] - mesh->getVertices()[cycle[i]]);
+		cur_cycle_length += cur_length;
+		if (cur_cycle_length < cycle_length / 4.0) {
+			T(cycle[i+1], 0) = cur_cycle_length * 4.0/ cycle_length;
+			T(cycle[i+1], 1) = 0.0;
+		} else if (cur_cycle_length < cycle_length / 2.0) {
+			T(cycle[i+1], 0) = 1.0;
+			T(cycle[i+1], 1) = (cur_cycle_length - 1.0 / 4.0 * cycle_length) * 4.0 / cycle_length;
+		} else if (cur_cycle_length < 3.0 * cycle_length / 4.0) {
+			T(cycle[i+1], 0) = 1.0 - (cur_cycle_length - cycle_length / 2.0) * 4.0 / cycle_length;
+			T(cycle[i+1], 1) = 1.0;
+		} else {
+			T(cycle[i+1], 0) = 0.0;
+			T(cycle[i+1], 1) = 1.0 - (cur_cycle_length - 3.0 / 4.0 * cycle_length) * 4.0 / cycle_length;
+		}
+	}
+	T(cycle[0], 0) = 0.0;
+	T(cycle[0], 1) = 0.0;
 	
 	// We build an equation system to compute the harmonic coordinates of the 
 	// interior vertices
 	// TODO
+	Eigen::SparseMatrix<double> L(nVertices, nVertices);
+	Eigen::SparseMatrix<double> M_inv(nVertices, nVertices);
+	Eigen::SparseMatrix<double> C(nVertices, nVertices);
+	vector<unsigned int> neighbors;
+	for (unsigned int i = 0; i < nVertices; i++) {
+		mesh->getNeighbors(i, neighbors);
+		//Fill M
+		M_inv.insert(i, i) = 1.0 / neighbors.size();
+		//Fill C
+		for (unsigned j = 0; j < neighbors.size(); j++) {
+			C.coeffRef(i, neighbors[j]) = 1.0;
+		}
+		C.coeffRef(i, i) = -(double)neighbors.size();
+	}
+	
+	L = M_inv * C;
+	for (int i = 0; i < cycle.size() - 1; i++) {
+		L.row(cycle[i]) *= 0;
+		L.coeffRef(cycle[i], cycle[i]) = 1.0;
+	}
+	L.prune(0, 0);
 	
 	// Finally, we solve the system and assign the computed texture coordinates
 	// to their corresponding vertices on the input mesh
 	// TODO
+	Eigen::LeastSquaresConjugateGradient<Eigen::SparseMatrix<double> > solver;
+	solver.compute(L);
+	Eigen::MatrixXd T_prime(nVertices, 2);
+	T_prime = solver.solve(T);
+	for (unsigned int i = 0; i < nVertices; i++) {
+		mesh->getTexCoords()[i] = glm::vec2(T_prime(i, 0), T_prime(i, 1));
+	}
 	return;
 }
 
