@@ -53,8 +53,8 @@ void RBFFunction::init(const PointCloud *pointCloud, float standardDeviation, fl
 			glm::vec3 pj = cloud->getPoints()[neighbor_ids[j].first];
 			float r = glm::length(pi - pj);
 			float rbf = gaussianRBF(r);
-			A_plus.coeffRef(i, neighbor_ids[j].first) = rbf;
-			A_plus.coeffRef(neighbor_ids[j].first, i) = rbf;
+			A_minus.coeffRef(i, neighbor_ids[j].first) = rbf;
+			A_minus.coeffRef(neighbor_ids[j].first, i) = rbf;
 		}
 	}
 	// Matrix regularization A = A + lambda*I
