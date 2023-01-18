@@ -113,37 +113,32 @@ void LaplacianSmoothing::globalLaplacian(const vector<bool> &constraints)
 {
 	int nVertices = mesh->getVertices().size();
 	Eigen::SparseMatrix<double> L(nVertices, nVertices);
-	Eigen::SparseMatrix<double> M(nVertices, nVertices);
+	Eigen::SparseMatrix<double> M_inv(nVertices, nVertices);
 	Eigen::SparseMatrix<double> C(nVertices, nVertices);
 	vector<unsigned int> neighbors;
 	for (unsigned int i = 0; i < nVertices; i++) {
 		mesh->getNeighbors(i, neighbors);
 		//Fill M
-		M.insert(i, i) = neighbors.size();
+		M_inv.insert(i, i) = 1.0/neighbors.size();
 		//Fill C
 		for (unsigned j = 0; j < neighbors.size(); j++) {
-			C.coeffRef(i, neighbors[j]) = 1;
+			C.coeffRef(i, neighbors[j]) = 1.0;
 		}
-		C.coeffRef(i, i) = -neighbors.size();
+		C.coeffRef(i, i) = -(double)neighbors.size();
 	}
-	Eigen::ConjugateGradient<Eigen::SparseMatrix<double>, Eigen::Lower | Eigen::Upper > solver;
-	solver.compute(M);
-	Eigen::SparseMatrix<double> I(nVertices, nVertices);
-	I.setIdentity();
-	Eigen::SparseMatrix<double> M_inv(nVertices, nVertices);
-	M_inv = solver.solve(I);
+	Eigen::LeastSquaresConjugateGradient<Eigen::SparseMatrix<double> > solver;
 	L = M_inv * C;
 	Eigen::MatrixXd S = Eigen::MatrixXd::Zero(nVertices,3);
 	for (unsigned int i = 0; i < nVertices; i++) {
 		if (constraints[i]) {
 			L.row(i) *= 0;
-			L.coeffRef(i, i) = 1;
+			L.coeffRef(i, i) = 1.0;
 			S(i,0) = mesh->getVertices()[i].x;
 			S(i,1) = mesh->getVertices()[i].y;
 			S(i,2) = mesh->getVertices()[i].z;
 		}
 	}
-	solver.setTolerance(0.0001);
+	L.prune(0, 0);
 	solver.compute(L);
 	Eigen::MatrixXd P_prime(nVertices,3);
 	Eigen::MatrixXd Guess = Eigen::MatrixXd::Zero(nVertices, 3);
@@ -152,7 +147,7 @@ void LaplacianSmoothing::globalLaplacian(const vector<bool> &constraints)
 		Guess(i, 1) = mesh->getVertices()[i].y;
 		Guess(i, 2) = mesh->getVertices()[i].z;
 	}
-	P_prime = solver.solveWithGuess(S, Guess);
+	P_prime = solver.solve(S);
 	for (unsigned int i = 0; i < nVertices; i++) {
 		mesh->getVertices()[i] = glm::vec3(P_prime(i, 0), P_prime(i, 1), P_prime(i, 2));
 	}	
@@ -168,25 +163,19 @@ void LaplacianSmoothing::globalBilaplacian(const vector<bool> &constraints, floa
 	int nVertices = mesh->getVertices().size();
 	int nConstraints = std::count(constraints.begin(), constraints.end(), true);
 	Eigen::SparseMatrix<double> L(nVertices, nVertices);
-	Eigen::SparseMatrix<double> M(nVertices, nVertices);
+	Eigen::SparseMatrix<double> M_inv(nVertices, nVertices);
 	Eigen::SparseMatrix<double> C(nVertices, nVertices);
 	vector<unsigned int> neighbors;
 	for (unsigned int i = 0; i < nVertices; i++) {
 		mesh->getNeighbors(i, neighbors);
 		//Fill M
-		M.insert(i, i) = neighbors.size();
+		M_inv.insert(i, i) = 1.0/neighbors.size();
 		//Fill C
 		for (unsigned j = 0; j < neighbors.size(); j++) {
-			C.coeffRef(i, neighbors[j]) = 1;
+			C.coeffRef(i, neighbors[j]) = 1.0;
 		}
-		C.coeffRef(i, i) = -neighbors.size();
+		C.coeffRef(i, i) = -(double)neighbors.size();
 	}
-	Eigen::ConjugateGradient<Eigen::SparseMatrix<double>, Eigen::Lower | Eigen::Upper > solver;
-	solver.compute(M);
-	Eigen::SparseMatrix<double> I(nVertices, nVertices);
-	I.setIdentity();
-	Eigen::SparseMatrix<double> M_inv(nVertices, nVertices);
-	M_inv = solver.solve(I);
 	L = M_inv * C;
 	
 	Eigen::MatrixXd S = Eigen::MatrixXd::Zero(nVertices + nConstraints, 3);
@@ -199,7 +188,7 @@ void LaplacianSmoothing::globalBilaplacian(const vector<bool> &constraints, floa
 	int constraint_counter = 0;
 	for (unsigned int i = 0; i < nVertices; i++) {
 		if (constraints[i]) {
-			L_new.insert(nVertices + constraint_counter, nVertices - nConstraints + constraint_counter) = 1 * constraintWeight;
+			L_new.insert(nVertices + constraint_counter, i) = 1.0 * constraintWeight;
 			S(nVertices + constraint_counter, 0) = mesh->getVertices()[i].x * constraintWeight;
 			S(nVertices + constraint_counter, 1) = mesh->getVertices()[i].y * constraintWeight;
 			S(nVertices + constraint_counter, 2) = mesh->getVertices()[i].z * constraintWeight;
@@ -207,7 +196,6 @@ void LaplacianSmoothing::globalBilaplacian(const vector<bool> &constraints, floa
 		}
 	}
 	Eigen::LeastSquaresConjugateGradient<Eigen::SparseMatrix<double> > lscg;
-	solver.setTolerance(0.0001);
 	lscg.compute(L_new);
 	Eigen::MatrixXd P_prime(nVertices, 3);
 	Eigen::MatrixXd Guess = Eigen::MatrixXd::Zero(nVertices, 3);
