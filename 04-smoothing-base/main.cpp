@@ -6,6 +6,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_internal.h"
 #include "Application.h"
+#include <Eigen/Sparse>
 
 
 //Remove console (only works in Visual Studio)
@@ -141,6 +142,8 @@ static void idleCallback()
 
 int main(int argc, char **argv)
 {
+	Eigen::initParallel();
+	Eigen::setNbThreads(6);
 	// GLUT initialization
 	glutInit(&argc, argv);
 	glutInitContextVersion(3,3);

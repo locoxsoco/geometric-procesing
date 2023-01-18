@@ -143,6 +143,7 @@ void LaplacianSmoothing::globalLaplacian(const vector<bool> &constraints)
 			S(i,2) = mesh->getVertices()[i].z;
 		}
 	}
+	solver.setTolerance(0.0001);
 	solver.compute(L);
 	Eigen::MatrixXd P_prime(nVertices,3);
 	Eigen::MatrixXd Guess = Eigen::MatrixXd::Zero(nVertices, 3);
@@ -153,9 +154,7 @@ void LaplacianSmoothing::globalLaplacian(const vector<bool> &constraints)
 	}
 	P_prime = solver.solveWithGuess(S, Guess);
 	for (unsigned int i = 0; i < nVertices; i++) {
-		if (!constraints[i]) {
-			mesh->getVertices()[i] = glm::vec3(P_prime(i, 0), P_prime(i, 1), P_prime(i, 2));
-		}
+		mesh->getVertices()[i] = glm::vec3(P_prime(i, 0), P_prime(i, 1), P_prime(i, 2));
 	}	
 }
 
@@ -208,6 +207,7 @@ void LaplacianSmoothing::globalBilaplacian(const vector<bool> &constraints, floa
 		}
 	}
 	Eigen::LeastSquaresConjugateGradient<Eigen::SparseMatrix<double> > lscg;
+	solver.setTolerance(0.0001);
 	lscg.compute(L_new);
 	Eigen::MatrixXd P_prime(nVertices, 3);
 	Eigen::MatrixXd Guess = Eigen::MatrixXd::Zero(nVertices, 3);
